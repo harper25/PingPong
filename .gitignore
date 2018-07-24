@@ -1,0 +1,9 @@
+*.cbp
+*.depend
+*.layout
+*.txt
+*.cscope_file_list
+bin/
+obj/
+backups/
+*.xml
