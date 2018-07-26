@@ -20,6 +20,10 @@ __published:	// IDE-managed Components
     TTimer *timerRPup;
     TTimer *timerLPdown;
     TTimer *timerRPdown;
+    TImage *ball;
+    TTimer *timerBall;
+    TButton *buttonNewGame;
+    TShape *score;
     void __fastcall timerLPupTimer(TObject *Sender);
     void __fastcall timerLPdownTimer(TObject *Sender);
     void __fastcall timerRPupTimer(TObject *Sender);
@@ -28,6 +32,8 @@ __published:	// IDE-managed Components
           TShiftState Shift);
     void __fastcall FormKeyDown(TObject *Sender, WORD &Key,
           TShiftState Shift);
+    void __fastcall timerBallTimer(TObject *Sender);
+    void __fastcall buttonNewGameClick(TObject *Sender);
 private:	// User declarations
 public:		// User declarations
     __fastcall TGameWindow(TComponent* Owner);
