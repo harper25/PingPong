@@ -1,6 +1,6 @@
 object GameWindow: TGameWindow
-  Left = 239
-  Top = 114
+  Left = 240
+  Top = 128
   Width = 850
   Height = 489
   BorderIcons = [biSystemMenu, biMinimize]
@@ -544,20 +544,165 @@ object GameWindow: TGameWindow
     Align = alTop
     Brush.Color = clTeal
   end
+  object points: TLabel
+    Left = 360
+    Top = 8
+    Width = 97
+    Height = 32
+    Alignment = taCenter
+    AutoSize = False
+    Caption = '0:0'
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clLime
+    Font.Height = -23
+    Font.Name = 'Comic Sans MS'
+    Font.Style = [fsBold]
+    ParentFont = False
+    Transparent = True
+  end
+  object winner: TLabel
+    Left = 248
+    Top = 216
+    Width = 337
+    Height = 38
+    Alignment = taCenter
+    AutoSize = False
+    Caption = 'Winner!'
+    Font.Charset = EASTEUROPE_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -27
+    Font.Name = 'Comic Sans MS'
+    Font.Style = []
+    ParentFont = False
+    Visible = False
+  end
   object buttonNewGame: TButton
-    Left = 288
-    Top = 272
+    Left = 280
+    Top = 264
     Width = 273
     Height = 81
+    Cursor = crHandPoint
     Caption = 'Play!'
-    Font.Charset = DEFAULT_CHARSET
+    Font.Charset = EASTEUROPE_CHARSET
     Font.Color = clWindowText
     Font.Height = -32
-    Font.Name = 'MS Sans Serif'
+    Font.Name = 'Comic Sans MS'
     Font.Style = []
     ParentFont = False
     TabOrder = 0
     OnClick = buttonNewGameClick
+  end
+  object RadioGroup1: TRadioGroup
+    Left = 280
+    Top = 64
+    Width = 273
+    Height = 145
+    Caption = 'Game options - points to win'
+    Font.Charset = EASTEUROPE_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -19
+    Font.Name = 'Comic Sans MS'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 1
+  end
+  object RadioButton4: TRadioButton
+    Left = 288
+    Top = 112
+    Width = 113
+    Height = 17
+    Cursor = crHandPoint
+    Caption = '4 points'
+    Checked = True
+    Font.Charset = EASTEUROPE_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'Comic Sans MS'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 2
+    TabStop = True
+    OnClick = RadioButton4Click
+  end
+  object RadioButton7: TRadioButton
+    Left = 288
+    Top = 152
+    Width = 113
+    Height = 17
+    Cursor = crHandPoint
+    Caption = '7 points'
+    Font.Charset = EASTEUROPE_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'Comic Sans MS'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 3
+    OnClick = RadioButton7Click
+  end
+  object RadioButton11: TRadioButton
+    Left = 416
+    Top = 112
+    Width = 113
+    Height = 17
+    Cursor = crHandPoint
+    Caption = '11 points'
+    Font.Charset = EASTEUROPE_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'Comic Sans MS'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 4
+    OnClick = RadioButton11Click
+  end
+  object RadioButton21: TRadioButton
+    Left = 416
+    Top = 152
+    Width = 113
+    Height = 17
+    Cursor = crHandPoint
+    Caption = '21 points'
+    Font.Charset = EASTEUROPE_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'Comic Sans MS'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 5
+    OnClick = RadioButton21Click
+  end
+  object player1: TEdit
+    Left = 16
+    Top = 8
+    Width = 177
+    Height = 38
+    Cursor = crIBeam
+    Color = clWhite
+    Font.Charset = EASTEUROPE_CHARSET
+    Font.Color = clLime
+    Font.Height = -21
+    Font.Name = 'Comic Sans MS'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 6
+    Text = 'Player 1'
+  end
+  object player2: TEdit
+    Left = 648
+    Top = 8
+    Width = 169
+    Height = 38
+    Cursor = crIBeam
+    Color = clWhite
+    Font.Charset = EASTEUROPE_CHARSET
+    Font.Color = clLime
+    Font.Height = -21
+    Font.Name = 'Comic Sans MS'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 7
+    Text = 'Player 2'
   end
   object timerLPup: TTimer
     Enabled = False
@@ -592,6 +737,6 @@ object GameWindow: TGameWindow
     Interval = 10
     OnTimer = timerBallTimer
     Left = 392
-    Top = 88
+    Top = 392
   end
 end

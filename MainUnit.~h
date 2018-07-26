@@ -24,6 +24,15 @@ __published:	// IDE-managed Components
     TTimer *timerBall;
     TButton *buttonNewGame;
     TShape *score;
+    TLabel *points;
+    TRadioGroup *RadioGroup1;
+    TRadioButton *RadioButton4;
+    TRadioButton *RadioButton7;
+    TRadioButton *RadioButton11;
+    TRadioButton *RadioButton21;
+    TLabel *winner;
+    TEdit *player1;
+    TEdit *player2;
     void __fastcall timerLPupTimer(TObject *Sender);
     void __fastcall timerLPdownTimer(TObject *Sender);
     void __fastcall timerRPupTimer(TObject *Sender);
@@ -34,6 +43,10 @@ __published:	// IDE-managed Components
           TShiftState Shift);
     void __fastcall timerBallTimer(TObject *Sender);
     void __fastcall buttonNewGameClick(TObject *Sender);
+    void __fastcall RadioButton4Click(TObject *Sender);
+    void __fastcall RadioButton7Click(TObject *Sender);
+    void __fastcall RadioButton11Click(TObject *Sender);
+    void __fastcall RadioButton21Click(TObject *Sender);
 private:	// User declarations
 public:		// User declarations
     __fastcall TGameWindow(TComponent* Owner);

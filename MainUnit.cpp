@@ -17,7 +17,29 @@ int ballDirectionLeftRight;
 int x;
 int y;
 int numberOfSuccessfulBounces = 0;
+int pointsPlayer1, pointsPlayer2;
+int pointsToWin = 4;
+AnsiString player1name = "";
+AnsiString player2name = "";
 
+void setNewRoundLayout()
+{
+    GameWindow->ball->Left = 392;
+    GameWindow->ball->Top = 220;
+    numberOfSuccessfulBounces = 0;
+    GameWindow->ball->Visible = true;
+
+    ballVelocity = 6;
+    ballRotation = random(91) - 45;
+    ballDirectionLeftRight = random(2);
+    x = ballVelocity * cos((double) 3.14/180.0 * ballRotation);
+    y = ballVelocity * sin((double) 3.14/180.0 * ballRotation);
+    if (ballDirectionLeftRight == 1)
+        x = -x;
+
+    GameWindow->buttonNewGame->Visible = false;
+    GameWindow->timerBall->Enabled = true;
+}
 
 //---------------------------------------------------------------------------
 __fastcall TGameWindow::TGameWindow(TComponent* Owner)
@@ -78,22 +100,78 @@ void __fastcall TGameWindow::timerBallTimer(TObject *Sender)
 
     // bounce from top and bottom wall
     if (ball->Top-5 <= background->Top)       y = -y;
-    if (ball->Top + ball->Height+5 >= background->Height)     y = -y;
+    if (ball->Top + ball->Height+5 >= background->Height + score->Height)
+        y = -y;
 
     // failure
     if (ball->Left <= background->Left)
     {
         timerBall->Enabled = false;
         ball->Visible = false;
-        buttonNewGame->Caption = "The winner is Player 2! Once more?";
-        buttonNewGame->Visible = true;
+        pointsPlayer2++;
+
+        points->Caption = IntToStr(pointsPlayer1) + ":" + IntToStr(pointsPlayer2);
+
+        if (pointsPlayer2 >= pointsToWin)
+        {
+
+            winner->Caption = "The winner is " + player2->Text + "!";
+            winner->Visible = true;
+
+            RadioGroup1->Visible = true;
+            RadioButton4->Visible = true;
+            RadioButton7->Visible = true;
+            RadioButton11->Visible = true;
+            RadioButton21->Visible = true;
+            buttonNewGame->Visible = true;
+
+            player1->ReadOnly = false;
+            player2->ReadOnly = false;
+            player1->Color = clWhite;
+            player2->Color = clWhite;
+            player1->Cursor = crIBeam;
+            player2->Cursor = crIBeam;
+        }
+        else
+        {
+            Application->ProcessMessages();
+            Sleep(1000);
+            setNewRoundLayout();
+        }
     }
     else if (ball->Left + ball->Width >= background->Left + background->Width)
     {
         timerBall->Enabled = false;
         ball->Visible = false;
-        buttonNewGame->Caption = "The winner is Player 1! Once more?";
-        buttonNewGame->Visible = true;
+        pointsPlayer1++;
+
+        points->Caption = IntToStr(pointsPlayer1) + ":" + IntToStr(pointsPlayer2);
+
+        if (pointsPlayer1 >= pointsToWin)
+        {
+            winner->Caption = "The winner is " + player1->Text + "!";
+            winner->Visible = true;
+
+            RadioGroup1->Visible = true;
+            RadioButton4->Visible = true;
+            RadioButton7->Visible = true;
+            RadioButton11->Visible = true;
+            RadioButton21->Visible = true;
+            buttonNewGame->Visible = true;
+
+            player1->ReadOnly = false;
+            player2->ReadOnly = false;
+            player1->Color = clWhite;
+            player2->Color = clWhite;
+            player1->Cursor = crIBeam;
+            player2->Cursor = crIBeam;
+        }
+        else
+        {
+            Application->ProcessMessages();
+            Sleep(1000);
+            setNewRoundLayout();
+        }
     }
     else if (ball->Top + ball->Height/2 >= leftpaddle->Top &&
              ball->Top + ball->Height <= leftpaddle->Top + leftpaddle->Height + ball->Height/2 &&
@@ -144,7 +222,22 @@ void __fastcall TGameWindow::buttonNewGameClick(TObject *Sender)
     ball->Left = 392;
     ball->Top = 220;
     numberOfSuccessfulBounces = 0;
+    pointsPlayer1 = 0;
+    pointsPlayer2 = 0;
     ball->Visible = true;
+    RadioGroup1->Visible = false;
+    RadioButton4->Visible = false;
+    RadioButton7->Visible = false;
+    RadioButton11->Visible = false;
+    RadioButton21->Visible = false;
+    winner->Visible = false;
+
+    player1->ReadOnly = true;
+    player1->Color = clTeal;
+    player2->ReadOnly = true;
+    player2->Color = clTeal;
+    player1->Cursor = crNo;
+    player1->Cursor = crNo;
 
     ballVelocity = 6;
     ballRotation = random(91) - 45;
@@ -158,4 +251,29 @@ void __fastcall TGameWindow::buttonNewGameClick(TObject *Sender)
     timerBall->Enabled = true;
 }
 //---------------------------------------------------------------------------
+
+void __fastcall TGameWindow::RadioButton4Click(TObject *Sender)
+{
+    pointsToWin = 4;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TGameWindow::RadioButton7Click(TObject *Sender)
+{
+    pointsToWin = 7;    
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TGameWindow::RadioButton11Click(TObject *Sender)
+{
+     pointsToWin = 11;        
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TGameWindow::RadioButton21Click(TObject *Sender)
+{
+    pointsToWin = 21;        
+}
+//---------------------------------------------------------------------------
+
 
