@@ -1,6 +1,6 @@
 object GameWindow: TGameWindow
-  Left = 240
-  Top = 128
+  Left = 261
+  Top = 137
   Width = 850
   Height = 489
   BorderIcons = [biSystemMenu, biMinimize]
@@ -18,6 +18,7 @@ object GameWindow: TGameWindow
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
+  OnActivate = FormActivate
   OnKeyDown = FormKeyDown
   OnKeyUp = FormKeyUp
   PixelsPerInch = 96
@@ -573,6 +574,40 @@ object GameWindow: TGameWindow
     Font.Height = -27
     Font.Name = 'Comic Sans MS'
     Font.Style = []
+    ParentFont = False
+    Visible = False
+  end
+  object player1static: TLabel
+    Left = 16
+    Top = 8
+    Width = 177
+    Height = 41
+    AutoSize = False
+    Caption = 'player1'
+    Color = clTeal
+    Font.Charset = EASTEUROPE_CHARSET
+    Font.Color = clLime
+    Font.Height = -21
+    Font.Name = 'Comic Sans MS'
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+    Visible = False
+  end
+  object player2static: TLabel
+    Left = 648
+    Top = 8
+    Width = 177
+    Height = 41
+    AutoSize = False
+    Caption = 'player2'
+    Color = clTeal
+    Font.Charset = EASTEUROPE_CHARSET
+    Font.Color = clLime
+    Font.Height = -21
+    Font.Name = 'Comic Sans MS'
+    Font.Style = [fsBold]
+    ParentColor = False
     ParentFont = False
     Visible = False
   end

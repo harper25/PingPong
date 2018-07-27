@@ -19,8 +19,23 @@ int y;
 int numberOfSuccessfulBounces = 0;
 int pointsPlayer1, pointsPlayer2;
 int pointsToWin = 4;
-AnsiString player1name = "";
-AnsiString player2name = "";
+
+void setNewGameLayout()
+{
+    GameWindow->RadioGroup1->Visible = true;
+    GameWindow->RadioButton4->Visible = true;
+    GameWindow->RadioButton7->Visible = true;
+    GameWindow->RadioButton11->Visible = true;
+    GameWindow->RadioButton21->Visible = true;
+    GameWindow->buttonNewGame->Visible = true;
+
+    GameWindow->player1static->Visible = false;
+    GameWindow->player2static->Visible = false;
+    GameWindow->player1->Visible = true;
+    GameWindow->player2->Visible = true;
+
+    GameWindow->points->Caption = "0:0";
+}
 
 void setNewRoundLayout()
 {
@@ -45,6 +60,7 @@ void setNewRoundLayout()
 __fastcall TGameWindow::TGameWindow(TComponent* Owner)
     : TForm(Owner)
 {
+
 }
 //---------------------------------------------------------------------------
 void __fastcall TGameWindow::timerLPupTimer(TObject *Sender)
@@ -80,6 +96,17 @@ void __fastcall TGameWindow::FormKeyDown(TObject *Sender, WORD &Key,
     if (Key == VK_DOWN) timerRPdown->Enabled = true;
     if (Key == 'A') timerLPup->Enabled = true;
     if (Key == 'Z') timerLPdown->Enabled = true;
+    if (Key == 'P')
+    {
+        if (timerBall->Enabled == true)
+            {
+                timerBall->Enabled = false;
+            }
+        else
+            {
+                timerBall->Enabled = true;
+            }
+    }
 }
 //---------------------------------------------------------------------------
 
@@ -103,7 +130,7 @@ void __fastcall TGameWindow::timerBallTimer(TObject *Sender)
     if (ball->Top + ball->Height+5 >= background->Height + score->Height)
         y = -y;
 
-    // failure
+    // point for player1
     if (ball->Left <= background->Left)
     {
         timerBall->Enabled = false;
@@ -117,20 +144,7 @@ void __fastcall TGameWindow::timerBallTimer(TObject *Sender)
 
             winner->Caption = "The winner is " + player2->Text + "!";
             winner->Visible = true;
-
-            RadioGroup1->Visible = true;
-            RadioButton4->Visible = true;
-            RadioButton7->Visible = true;
-            RadioButton11->Visible = true;
-            RadioButton21->Visible = true;
-            buttonNewGame->Visible = true;
-
-            player1->ReadOnly = false;
-            player2->ReadOnly = false;
-            player1->Color = clWhite;
-            player2->Color = clWhite;
-            player1->Cursor = crIBeam;
-            player2->Cursor = crIBeam;
+            setNewGameLayout();
         }
         else
         {
@@ -139,6 +153,7 @@ void __fastcall TGameWindow::timerBallTimer(TObject *Sender)
             setNewRoundLayout();
         }
     }
+    // point for player2
     else if (ball->Left + ball->Width >= background->Left + background->Width)
     {
         timerBall->Enabled = false;
@@ -151,20 +166,7 @@ void __fastcall TGameWindow::timerBallTimer(TObject *Sender)
         {
             winner->Caption = "The winner is " + player1->Text + "!";
             winner->Visible = true;
-
-            RadioGroup1->Visible = true;
-            RadioButton4->Visible = true;
-            RadioButton7->Visible = true;
-            RadioButton11->Visible = true;
-            RadioButton21->Visible = true;
-            buttonNewGame->Visible = true;
-
-            player1->ReadOnly = false;
-            player2->ReadOnly = false;
-            player1->Color = clWhite;
-            player2->Color = clWhite;
-            player1->Cursor = crIBeam;
-            player2->Cursor = crIBeam;
+            setNewGameLayout();
         }
         else
         {
@@ -173,6 +175,7 @@ void __fastcall TGameWindow::timerBallTimer(TObject *Sender)
             setNewRoundLayout();
         }
     }
+    // bounce from left paddle
     else if (ball->Top + ball->Height/2 >= leftpaddle->Top &&
              ball->Top + ball->Height <= leftpaddle->Top + leftpaddle->Height + ball->Height/2 &&
              ball->Left < leftpaddle->Left + leftpaddle->Width)
@@ -184,7 +187,6 @@ void __fastcall TGameWindow::timerBallTimer(TObject *Sender)
             float partOfPaddle = -(((float) leftpaddle->Top + leftpaddle->Height/2) -
                 ((float) ball->Top + ball->Height/2))/ ((float) leftpaddle->Height/2);
 
-            //ballRotation = - ballRotation + (int) 60 * partOfPaddle;
             ballRotation = (int) 60 * partOfPaddle;
 
             if (ballRotation > 45) ballRotation = 45;
@@ -193,6 +195,7 @@ void __fastcall TGameWindow::timerBallTimer(TObject *Sender)
             y = ballVelocity * sin(3.14/180.0 * (double) ballRotation);
         }
     }
+    // bounce from right paddle
     else if (ball->Top + ball->Height/2 >= rightpaddle->Top &&
              ball->Top + ball->Height <= rightpaddle->Top + rightpaddle->Height + ball->Height/2 &&
              ball->Left + ball->Width > rightpaddle->Left)
@@ -232,12 +235,12 @@ void __fastcall TGameWindow::buttonNewGameClick(TObject *Sender)
     RadioButton21->Visible = false;
     winner->Visible = false;
 
-    player1->ReadOnly = true;
-    player1->Color = clTeal;
-    player2->ReadOnly = true;
-    player2->Color = clTeal;
-    player1->Cursor = crNo;
-    player1->Cursor = crNo;
+    player1static->Caption = player1->Text;
+    player2static->Caption = player2->Text;
+    player1static->Visible = true;
+    player2static->Visible = true;
+    player1->Visible = false;
+    player2->Visible = false;
 
     ballVelocity = 6;
     ballRotation = random(91) - 45;
@@ -275,5 +278,31 @@ void __fastcall TGameWindow::RadioButton21Click(TObject *Sender)
     pointsToWin = 21;        
 }
 //---------------------------------------------------------------------------
+
+
+void __fastcall TGameWindow::FormActivate(TObject *Sender)
+{
+    Application->MessageBox(
+        "Welcome to Ping Pong!                                           \n\n"
+        "Controls of Player 1:\n"
+        "A - move up\n"
+        "Z - move down\n\n"
+        "Controls of Player 2:\n"
+        "<arrow_up> - move up\n"
+        "<arrow_down> - move down\n\n"
+        "Additional info:\n"
+        "1. The ball moves faster with the passing of time.\n"
+        "2. It is possible to write players names before beginning\n"
+        "    of the game.\n"
+        "3. Press 'P' to pause/resume the game\n\n"
+        "Enjoy!",
+        "Ping Pong", MB_OK);
+    GameWindow->Visible = true;
+    GameWindow->BringToFront();    
+}
+//---------------------------------------------------------------------------
+
+
+
 
 

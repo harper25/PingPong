@@ -33,6 +33,8 @@ __published:	// IDE-managed Components
     TLabel *winner;
     TEdit *player1;
     TEdit *player2;
+    TLabel *player1static;
+    TLabel *player2static;
     void __fastcall timerLPupTimer(TObject *Sender);
     void __fastcall timerLPdownTimer(TObject *Sender);
     void __fastcall timerRPupTimer(TObject *Sender);
@@ -47,6 +49,7 @@ __published:	// IDE-managed Components
     void __fastcall RadioButton7Click(TObject *Sender);
     void __fastcall RadioButton11Click(TObject *Sender);
     void __fastcall RadioButton21Click(TObject *Sender);
+    void __fastcall FormActivate(TObject *Sender);
 private:	// User declarations
 public:		// User declarations
     __fastcall TGameWindow(TComponent* Owner);
